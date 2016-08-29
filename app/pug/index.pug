@@ -1,0 +1,46 @@
+extends _layout
+block title
+    title Суперпоисковая Строка
+block content
+    .row
+        .col.col_width_6
+            form(id="form1").search.j-search
+                .search__row
+                    .search__input-wrap
+                        input(type="text" placeholder="Input any text..." name="search-input").search__input
+                        .search__delete x
+                    input(type="submit" value="Search").search__submit
+                .results.search__results
+                    a(href="#" data-type="phrase" target="_blank").results__item
+                        span.results__link Test link, it's long enough
+                        span.results__word &nbsp;in&nbsp;
+                        span.results__tip Phrase Overview
+                    a(href="#" data-type="domain" target="_blank").results__item
+                        span.results__link Medium.com
+                        span.results__word &nbsp;in&nbsp;
+                        span.results__tip Domain Overview
+                    a(href="#" data-type="overview" target="_blank").results__item
+                        span.results__link Test link, it's long enough
+                        span.results__word &nbsp;in&nbsp;
+                        span.results__tip URL Overview
+    .row
+        .col
+            form(id="form2").search.j-search
+                .search__row
+                    .search__input-wrap
+                        input(type="text" placeholder="Input any text..." name="search-input").search__input
+                        .search__delete x
+                    input(type="submit" value="Search").search__submit
+                .results.search__results
+                    a(href="#" data-type="phrase" target="_blank").results__item
+                        span.results__link Test link, it's long enough
+                        span.results__word &nbsp;in&nbsp;
+                        span.results__tip Phrase Overview
+                    a(href="#" data-type="domain" target="_blank").results__item
+                        span.results__link Medium.com
+                        span.results__word &nbsp;in&nbsp;
+                        span.results__tip Domain Overview
+                    a(href="#" data-type="overview" target="_blank").results__item
+                        span.results__link Test link, it's long enough
+                        span.results__word &nbsp;in&nbsp;
+                        span.results__tip URL Overview
