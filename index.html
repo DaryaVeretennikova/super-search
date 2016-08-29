@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="/dist/styles/search.css">
+    <title>Суперпоисковая Строка</title>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div class="row">
+        <div class="col col_width_6">
+          <form class="search j-search" id="form1">
+            <div class="search__row">
+              <div class="search__input-wrap">
+                <input class="search__input" type="text" placeholder="Input any text..." name="search-input">
+                <div class="search__delete">x</div>
+              </div>
+              <input class="search__submit" type="submit" value="Search">
+            </div>
+            <div class="results search__results"><a class="results__item" href="#" data-type="phrase" target="_blank"><span class="results__link">Test link, it's long enough</span><span class="results__word">&nbsp;in&nbsp;</span><span class="results__tip">Phrase Overview</span></a><a class="results__item" href="#" data-type="domain" target="_blank"><span class="results__link">Medium.com</span><span class="results__word">&nbsp;in&nbsp;</span><span class="results__tip">Domain Overview</span></a><a class="results__item" href="#" data-type="overview" target="_blank"><span class="results__link">Test link, it's long enough</span><span class="results__word">&nbsp;in&nbsp;</span><span class="results__tip">URL Overview</span></a></div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <form class="search j-search" id="form2">
+            <div class="search__row">
+              <div class="search__input-wrap">
+                <input class="search__input" type="text" placeholder="Input any text..." name="search-input">
+                <div class="search__delete">x</div>
+              </div>
+              <input class="search__submit" type="submit" value="Search">
+            </div>
+            <div class="results search__results"><a class="results__item" href="#" data-type="phrase" target="_blank"><span class="results__link">Test link, it's long enough</span><span class="results__word">&nbsp;in&nbsp;</span><span class="results__tip">Phrase Overview</span></a><a class="results__item" href="#" data-type="domain" target="_blank"><span class="results__link">Medium.com</span><span class="results__word">&nbsp;in&nbsp;</span><span class="results__tip">Domain Overview</span></a><a class="results__item" href="#" data-type="overview" target="_blank"><span class="results__link">Test link, it's long enough</span><span class="results__word">&nbsp;in&nbsp;</span><span class="results__tip">URL Overview</span></a></div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+    <script src="/dist/scripts/search.js"></script>
+  </body>
+</html>
