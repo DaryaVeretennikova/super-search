@@ -122,7 +122,7 @@ Search.prototype.constructPopup = function () {
         let hostname = url.hostname;
         let protocol = url.protocol;
         let urlWithoutProtocol = url.href.substring(protocol.length + '//'.length);
-        let site = 'super-analytics.com';
+        let site = 'http://super-analytics.com';
 
         [].slice.call(this.resultsItem).forEach(item => {
             let type = item.getAttribute('data-type');
