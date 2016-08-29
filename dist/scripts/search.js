@@ -6,17 +6,16 @@
 
 function debounce(func, wait, immediate) {
     var timeout;
-    return function () {
-        var context = this,
-            args = arguments;
-        var later = function () {
+    return function() {
+        var context = this, args = arguments;
+        var later = function() {
             timeout = null;
             if (!immediate) func.apply(context, args);
         };
         var callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
+    if (callNow) func.apply(context, args);
     };
 };
 
@@ -32,18 +31,11 @@ var Search = function Search(searchElem) {
     this.resultsItem = searchElem.getElementsByClassName('results__item');
     this.form = searchElem;
 
-    this.bind();
-
-    return Search;
-};
-
-/**
-* Вызываем методы конструктора Search
-**/
-Search.prototype.bind = function () {
     this.checkInputValue();
     this.searchButton();
     this.deleteButton();
+
+    return Search;
 };
 
 /**
@@ -52,17 +44,19 @@ Search.prototype.bind = function () {
 * делаем простую валидацию на кол-во введенных символов
 **/
 Search.prototype.checkInputValue = function () {
-    let check = debounce(() => {
-        this.constructPopup();
+    var this$1 = this;
 
-        if (this.input.value.length > 0) {
-            this.deleteBtn.classList.add('search__delete_active');
-            this.searchBtn.classList.add('search__submit_active');
-        } else {
-            this.deleteBtn.classList.remove('search__delete_active');
-            this.searchBtn.classList.remove('search__submit_active');
-        }
-    }, 250);
+    var check = debounce(function () {
+        this$1.constructPopup();
+
+            if (this$1.input.value.length > 0) {
+                this$1.deleteBtn.classList.add('search__delete_active');
+                this$1.searchBtn.classList.add('search__submit_active');
+            } else {
+                this$1.deleteBtn.classList.remove('search__delete_active');
+                this$1.searchBtn.classList.remove('search__submit_active');
+            }
+        }, 250);
 
     this.input.addEventListener('input', check);
 };
@@ -71,12 +65,14 @@ Search.prototype.checkInputValue = function () {
 * Кнопка "очистить поле поиска"
 **/
 Search.prototype.deleteButton = function () {
-    this.deleteBtn.addEventListener('click', () => {
-        this.input.value = '';
-        this.input.focus();
-        this.deleteBtn.classList.remove('search__delete_active');
-        this.searchBtn.classList.remove('search__submit_active');
-        this.popup.classList.remove('search__results_active');
+    var this$1 = this;
+
+    this.deleteBtn.addEventListener('click', function () {
+        this$1.input.value = '';
+        this$1.input.focus();
+        this$1.deleteBtn.classList.remove('search__delete_active');
+        this$1.searchBtn.classList.remove('search__submit_active');
+        this$1.popup.classList.remove('search__results_active');
     });
 };
 
@@ -86,8 +82,10 @@ Search.prototype.deleteButton = function () {
 * по клику посылает аякс-запрос
 **/
 Search.prototype.searchButton = function () {
-    this.searchBtn.addEventListener('click', e => {
-        let isSearchPossible = this.searchBtn.classList.value.indexOf('search__submit_active');
+    var this$1 = this;
+
+    this.searchBtn.addEventListener('click', function (e) {
+        var isSearchPossible = this$1.searchBtn.classList.value.indexOf('search__submit_active');
 
         e.preventDefault();
 
@@ -95,7 +93,7 @@ Search.prototype.searchButton = function () {
             return;
         }
 
-        this.sendAjax();
+        this$1.sendAjax();
     });
 };
 
@@ -103,9 +101,9 @@ Search.prototype.searchButton = function () {
 * Post запрос
 **/
 Search.prototype.sendAjax = function () {
-    let xhttp = new XMLHttpRequest();
-    let inputValue = this.input.value;
-    let formId = this.form.id;
+    var xhttp = new XMLHttpRequest();
+    var inputValue = this.input.value;
+    var formId = this.form.id;
 
     xhttp.open("POST", "super-analytics.com", true);
     xhttp.send('formId=' + formId + '&query=' + inputValue);
@@ -116,17 +114,19 @@ Search.prototype.sendAjax = function () {
 * url целиком, имя хоста, url без протокола
 **/
 Search.prototype.constructPopup = function () {
-    if (this.checkUrl(this.input.value)) {
-        let url = document.createElement('a');
-        url.href = this.input.value;
-        let hostname = url.hostname;
-        let protocol = url.protocol;
-        let urlWithoutProtocol = url.href.substring(protocol.length + '//'.length);
-        let site = 'http://super-analytics.com';
+    var this$1 = this;
 
-        [].slice.call(this.resultsItem).forEach(item => {
-            let type = item.getAttribute('data-type');
-            let hrefPart = site + '?suggestionType=' + type + '&query=';
+    if (this.checkUrl(this.input.value)) {
+        var url = document.createElement('a');
+        url.href = this.input.value;
+        var hostname = url.hostname;
+        var protocol = url.protocol;
+        var urlWithoutProtocol = url.href.substring(protocol.length + '//'.length);
+        var site = 'http://super-analytics.com';
+
+        [].slice.call(this.resultsItem).forEach(function (item) {
+            var type = item.getAttribute('data-type');
+            var hrefPart = site + '?suggestionType=' + type + '&query=';
 
             if (type === 'phrase') {
                 item.setAttribute('href', hrefPart + url.href);
@@ -139,7 +139,7 @@ Search.prototype.constructPopup = function () {
                 item.firstElementChild.innerHTML = urlWithoutProtocol;
             }
 
-            this.resultsWidth(item);
+            this$1.resultsWidth(item);
         });
 
         this.popup.classList.add('search__results_active');
@@ -152,17 +152,17 @@ Search.prototype.constructPopup = function () {
 * Рассчитываем ширину ссылки во "всплывашке"
 **/
 Search.prototype.resultsWidth = function (resultsItem) {
-    let link = resultsItem.getElementsByClassName('results__link')[0];
+    var link = resultsItem.getElementsByClassName('results__link')[0];
 
     //возвращаем ширину ссылки к изначальному значению
     link.style.width = 'auto';
 
-    let itemPaddingsWidth = parseInt(window.getComputedStyle(resultsItem).getPropertyValue('padding-left')) + parseInt(window.getComputedStyle(resultsItem).getPropertyValue('padding-right'));
-    let fullWidth = Math.floor(resultsItem.offsetWidth - itemPaddingsWidth);
-    let linkWidth = Math.ceil(link.offsetWidth);
-    let wordWidth = Math.ceil(resultsItem.getElementsByClassName('results__word')[0].offsetWidth);
-    let tipWidth = Math.ceil(resultsItem.getElementsByClassName('results__tip')[0].offsetWidth);
-    let availableWidth = fullWidth - (wordWidth + tipWidth + 2);
+    var itemPaddingsWidth = parseInt(window.getComputedStyle(resultsItem).getPropertyValue('padding-left')) + parseInt(window.getComputedStyle(resultsItem).getPropertyValue('padding-right'));
+    var fullWidth = Math.floor(resultsItem.offsetWidth - itemPaddingsWidth);
+    var linkWidth = Math.ceil(link.offsetWidth);
+    var wordWidth = Math.ceil(resultsItem.getElementsByClassName('results__word')[0].offsetWidth);
+    var tipWidth = Math.ceil(resultsItem.getElementsByClassName('results__tip')[0].offsetWidth);
+    var availableWidth = fullWidth - (wordWidth + tipWidth + 2);
 
     if (linkWidth > availableWidth) {
         link.style.width = availableWidth.toString() + 'px';
@@ -176,7 +176,7 @@ Search.prototype.resultsWidth = function (resultsItem) {
 * Проверка введенного значения в поле поиска на соответствие с url'ом
 */
 Search.prototype.checkUrl = function (value) {
-    const reUrl = new RegExp("^" +
+    var reUrl = new RegExp("^" +
     // protocol identifier
     "(?:(?:https?|ftp)://)" +
     // user:pass authentication
@@ -213,7 +213,7 @@ Search.prototype.checkUrl = function (value) {
         return;
     }
 
-    [].slice.call(search).forEach(item => {
+    [].slice.call(search).forEach(function (item) {
         return new Search(item);
     });
 })(document.getElementsByClassName('j-search'));

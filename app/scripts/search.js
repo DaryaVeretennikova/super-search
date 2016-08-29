@@ -23,7 +23,7 @@ function debounce(func, wait, immediate) {
 * Конструктор Search
 **/
 
-var Search = function Search(searchElem) {
+const Search = function Search(searchElem) {
     this.input = searchElem.getElementsByClassName('search__input')[0];
     this.deleteBtn = searchElem.getElementsByClassName('search__delete')[0];
     this.searchBtn = searchElem.getElementsByClassName('search__submit')[0];
@@ -31,18 +31,11 @@ var Search = function Search(searchElem) {
     this.resultsItem = searchElem.getElementsByClassName('results__item');
     this.form = searchElem;
 
-    this.bind();
-
-    return Search;
-};
-
-/**
-* Вызываем методы конструктора Search
-**/
-Search.prototype.bind = function () {
     this.checkInputValue();
     this.searchButton();
     this.deleteButton();
+
+    return Search;
 };
 
 /**

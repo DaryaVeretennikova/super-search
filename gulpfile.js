@@ -5,11 +5,11 @@ var postcss      = require('gulp-postcss');
 var pug          = require('gulp-pug');
 var autoprefixer = require('autoprefixer');
 var cssnano      = require('cssnano');
-var babel        = require('gulp-babel');
 var sugarss      = require('sugarss');
 var connect      = require('gulp-connect');
 var changed      = require('gulp-changed');
 var rename       = require('gulp-rename');
+var buble        = require('gulp-buble');
 
 /**
  * Configuring paths
@@ -66,7 +66,7 @@ gulp.task('styles', function() {
 gulp.task('scripts', function jsTask() {
     return gulp.src(paths.src.scripts)
         .pipe(changed(paths.build.scripts))
-        .pipe(babel())
+        .pipe(buble())
         .pipe(gulp.dest(paths.build.scripts))
         .pipe(connect.reload());
 });
