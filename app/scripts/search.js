@@ -34,6 +34,7 @@ const Search = function Search(searchElem) {
     this.checkInputValue();
     this.searchButton();
     this.deleteButton();
+    this.onResizeEvent();
 };
 
 /**
@@ -77,11 +78,11 @@ Search.prototype.deleteButton = function () {
 **/
 Search.prototype.searchButton = function () {
     this.searchBtn.addEventListener('click', e => {
-        let isSearchPossible = this.searchBtn.classList.value.indexOf('search__submit_active');
+        let isSearchPossible = this.searchBtn.classList.contains('search__submit_active');
 
         e.preventDefault();
 
-        if (isSearchPossible === -1) {
+        if (!isSearchPossible) {
             return;
         }
 
@@ -146,6 +147,7 @@ Search.prototype.resultsWidth = function (resultsItem) {
 
     //возвращаем ширину ссылки к изначальному значению
     link.style.width = 'auto';
+    link.style.opacity = '0';
 
     let itemPaddingsWidth = parseInt(window.getComputedStyle(resultsItem).getPropertyValue('padding-left')) + parseInt(window.getComputedStyle(resultsItem).getPropertyValue('padding-right'));
     let fullWidth = Math.floor(resultsItem.offsetWidth - itemPaddingsWidth);
@@ -160,6 +162,24 @@ Search.prototype.resultsWidth = function (resultsItem) {
     } else {
         link.classList.remove('results__link_hidden');
     }
+
+    link.style.opacity = '1';
+};
+
+/**
+* при изменении ширины экрана меняем размеры ссылок во "всплывашке"
+**/
+Search.prototype.onResizeEvent = function (resultsItem) {
+    let changeWidth = () => {
+
+        [].slice.call(this.resultsItem).forEach(item => {
+            this.resultsWidth(item);
+        });
+    };
+
+    window.addEventListener('resize', debounce(() => {
+        changeWidth();
+    }), 150);
 };
 
 /**

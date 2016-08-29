@@ -34,6 +34,7 @@ var Search = function Search(searchElem) {
     this.checkInputValue();
     this.searchButton();
     this.deleteButton();
+    this.onResizeEvent();
 };
 
 /**
@@ -83,11 +84,11 @@ Search.prototype.searchButton = function () {
     var this$1 = this;
 
     this.searchBtn.addEventListener('click', function (e) {
-        var isSearchPossible = this$1.searchBtn.classList.value.indexOf('search__submit_active');
+        var isSearchPossible = this$1.searchBtn.classList.contains('search__submit_active');
 
         e.preventDefault();
 
-        if (isSearchPossible === -1) {
+        if (!isSearchPossible) {
             return;
         }
 
@@ -154,6 +155,7 @@ Search.prototype.resultsWidth = function (resultsItem) {
 
     //возвращаем ширину ссылки к изначальному значению
     link.style.width = 'auto';
+    link.style.opacity = '0';
 
     var itemPaddingsWidth = parseInt(window.getComputedStyle(resultsItem).getPropertyValue('padding-left')) + parseInt(window.getComputedStyle(resultsItem).getPropertyValue('padding-right'));
     var fullWidth = Math.floor(resultsItem.offsetWidth - itemPaddingsWidth);
@@ -168,6 +170,26 @@ Search.prototype.resultsWidth = function (resultsItem) {
     } else {
         link.classList.remove('results__link_hidden');
     }
+
+    link.style.opacity = '1';
+};
+
+/**
+* при изменении ширины экрана меняем размеры ссылок во "всплывашке"
+**/
+Search.prototype.onResizeEvent = function (resultsItem) {
+    var this$1 = this;
+
+    var changeWidth = function () {
+
+        [].slice.call(this$1.resultsItem).forEach(function (item) {
+            this$1.resultsWidth(item);
+        });
+    };
+
+    window.addEventListener('resize', debounce(function () {
+        changeWidth();
+    }), 150);
 };
 
 /**
