@@ -34,8 +34,6 @@ const Search = function Search(searchElem) {
     this.checkInputValue();
     this.searchButton();
     this.deleteButton();
-
-    return Search;
 };
 
 /**
